@@ -3,65 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>星空许愿</title>
+    <title>Nguyện ước dưới bầu trời sao</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- 星空背景 -->
+    <!-- Nền bầu trời đầy sao -->
     <canvas id="starfield"></canvas>
     
-    <!-- 流星效果 -->
+    <!-- Hiệu ứng sao băng -->
     <canvas id="meteors"></canvas>
     
-    <!-- 烟花效果 -->
+    <!-- Hiệu ứng pháo hoa
+ -->
     <canvas id="fireworks"></canvas>
     
-    <!-- 主内容区 -->
+    <!-- Khu vực nội dung chính
+ -->
     <div class="container">
-        <!-- 初始引导区 -->
+        <!-- Vùng khởi động ban đầu -->
         <div id="intro-section" class="section active">
-            <h1 class="intro-title">星空许愿</h1>
-            <p class="intro-subtitle">在浩瀚星空中，向TA许下最真挚的愿望</p>
+            <h1 class="intro-title">Hãy ước một điều ước dưới bầu trời sao</h1>
+            <p class="intro-subtitle">Nguyện ước dưới bầu trời sao，Dưới bầu trời sao bao la, hãy gửi gắm đến người ấy những lời nguyện ước chân thành nhất.</p>
             <div class="input-container">
-                <input type="text" id="name-input" placeholder="在这里输入TA的名字">
-                <button id="start-btn" class="btn-primary">开始许愿</button>
+                <input type="text" id="name-input" placeholder="Nhập điều ước vào đây">
+                <button id="start-btn" class="btn-primary">Bắt đầu thực hiện một điều ước</button>
             </div>
         </div>
         
-        <!-- 名字显示区 -->
+        <!-- Khu vực hiển thị tên -->
         <div id="name-section" class="section hidden">
             <div id="name-display" class="name-display"></div>
         </div>
         
-        <!-- 表白文字区 -->
+        <!-- Khu vực chữ tỏ tình -->
         <div id="confession-section" class="section hidden">
             <div id="confession-text" class="confession-text">
-                有句话我在心里练习了好多遍，今天想认真说给你听。<br><br>
-                在没遇见你之前，我的日子就像没开灯的房间，安静却少了点温度。直到你出现，像一束温柔的光闯进来，把我的星空都点亮了。我开始期待每天的相遇，会偷偷记下你喜欢的小事，会因为你的开心而更开心。<br><br>
-                我喜欢你，不是一时兴起，是深思熟虑后的真心。<span id="her-name">[她的名字]</span>，你愿意做我的女朋友，让我往后的星空永远有你吗？
+                Có một câu nói anh đã luyện tập trong lòng rất nhiều lần, hôm nay muốn nghiêm túc nói cho em nghe。<br><br>
+                Trước khi gặp được em, những ngày tháng của anh giống như một căn phòng không bật đèn, yên tĩnh nhưng lại thiếu đi chút hơi ấm. Cho đến khi em xuất hiện, giống như một tia sáng dịu dàng chiếu rọi vào, thắp sáng cả bầu trời sao của anh. Anh bắt đầu mong ngóng những lần gặp gỡ mỗi ngày, lén lút ghi nhớ những điều nhỏ bé mà em thích, và vui lây với niềm vui của em.<br><br>
+                Anh thích em, không phải là cảm xúc bồng bột nhất thời, mà là sự chân tâm sau khi đã suy nghĩ rất kỹ. [điền tên người ấy vào đây], em có bằng lòng làm bạn gái anh, để bầu trời sao sau này của anh mãi mãi có bóng hình em không?<span id="her-name">[Diệu Huyền]</span>，Em có đồng ý làm bạn gái anh không?，Liệu em sẽ mãi ở trong bầu trời đầy sao tương lai của anh？
             </div>
             <div class="button-group">
-                <button id="yes-btn" class="btn-yes">愿意</button>
-                <button id="no-btn" class="btn-no">不愿意</button>
+                <button id="yes-btn" class="btn-yes">Em bằng lòng</button>
+                <button id="no-btn" class="btn-no">Em không bằng lòng</button>
             </div>
         </div>
         
-        <!-- 烟花庆祝区 -->
+        <!-- Khu vực tổ chức bắn pháo hoa-->
         <div id="celebration-section" class="section hidden">
             <div class="celebration-text">
-                <h2>太棒了！</h2>
-                <p>让我们一起点亮这片星空！</p>
+                <h2>Tuyệt vời！</h2>
+                <p>Hãy cùng nhau thắp sáng bầu trời sao này nhé!</p>
             </div>
         </div>
     </div>
     
-    <!-- 底部功能区 -->
+    <!-- Ruy băng dưới cùng -->
     <div class="footer">
-        <button id="restart-btn" class="btn-restart">重新开始</button>
+        <button id="restart-btn" class="btn-restart">Bắt đầu lại</button>
     </div>
     
-    <!-- 音频元素 -->
+    <!-- Yếu tố âm thanh -->
     <audio id="bg-music" loop preload="auto">
         <source src="https://www.aigei.com/sound/preview/1724228.html" type="audio/mpeg">
     </audio>
