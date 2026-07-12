@@ -1,335 +1,1189 @@
-/* 基础样式 */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* =======================================
+   RESET
+======================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-body {
-    overflow: hidden;
-    font-family: 'Noto Sans SC', sans-serif;
-    background-color: #0a0a2a;
-    color: white;
-    height: 100vh;
-    position: relative;
+html{
+    scroll-behavior:smooth;
 }
 
-/* 画布样式 */
-canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
+body{
+
+    font-family:'Poppins',sans-serif;
+
+    overflow-x:hidden;
+
+    background:#09091d;
+
+    color:white;
+
+    position:relative;
+
 }
 
-#starfield {
-    z-index: -3;
+
+/* =======================================
+   STAR BACKGROUND
+======================================= */
+
+#stars{
+
+    position:fixed;
+
+    width:100%;
+
+    height:100%;
+
+    left:0;
+
+    top:0;
+
+    z-index:-5;
+
+    background:
+    radial-gradient(circle at top,#1b1d40,#09091d 65%);
+
 }
 
-#meteors {
-    z-index: -2;
+
+/* =======================================
+   PETALS
+======================================= */
+
+.petals{
+
+    position:fixed;
+
+    width:100%;
+
+    height:100%;
+
+    pointer-events:none;
+
+    overflow:hidden;
+
+    z-index:-2;
+
 }
 
-#fireworks {
-    z-index: -1;
+.petal{
+
+    position:absolute;
+
+    width:18px;
+
+    height:18px;
+
+    background:pink;
+
+    border-radius:60% 40% 60% 40%;
+
+    opacity:.8;
+
+    animation:fall linear infinite;
+
 }
 
-/* 容器样式 */
-.container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    padding: 20px;
-    position: relative;
-    z-index: 1;
+@keyframes fall{
+
+0%{
+
+transform:translateY(-100px) rotate(0);
+
 }
 
-/* 部分样式 */
-.section {
-    display: none;
-    text-align: center;
+100%{
+
+transform:translateY(110vh) rotate(360deg);
+
 }
 
-.section.active {
-    display: block;
 }
 
-/* 初始引导区样式 */
-.intro-title {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    color: #fff;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-    animation: pulse 2s infinite alternate;
+
+/* =======================================
+   HEARTS
+======================================= */
+
+.hearts{
+
+position:fixed;
+
+width:100%;
+
+height:100%;
+
+pointer-events:none;
+
+z-index:-1;
+
+overflow:hidden;
+
 }
 
-.intro-subtitle {
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
-    color: #a8a8ff;
+.heart{
+
+position:absolute;
+
+color:#ff4d88;
+
+animation:heartFloat linear infinite;
+
+font-size:18px;
+
 }
 
-.input-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    width: 100%;
-    max-width: 400px;
+@keyframes heartFloat{
+
+0%{
+
+transform:translateY(100vh);
+
+opacity:0;
+
 }
 
-#name-input {
-    padding: 0.8rem 1.2rem;
-    border: none;
-    border-radius: 30px;
-    background-color: rgba(255, 255, 255, 0.1);
-    color: white;
-    font-size: 1rem;
-    width: 100%;
-    backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
+20%{
+
+opacity:1;
+
 }
 
-#name-input:focus {
-    outline: none;
-    background-color: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 0 15px rgba(173, 216, 230, 0.5);
+100%{
+
+transform:translateY(-120px);
+
+opacity:0;
+
 }
 
-#name-input::placeholder {
-    color: #a8a8ff;
 }
 
-/* 名字显示区样式 */
-.name-display {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 5rem;
-    font-weight: 700;
-    color: white;
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(138, 43, 226, 0.6);
-    animation: glow 2s infinite alternate;
+
+/* =======================================
+   LOADING
+======================================= */
+
+#loading{
+
+height:100vh;
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+align-items:center;
+
+gap:25px;
+
 }
 
-/* 表白文字区样式 */
-.confession-text {
-    font-size: 1.5rem;
-    line-height: 1.8;
-    margin-bottom: 2rem;
-    max-width: 80%;
-    color: #fff;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-    animation: float 3s ease-in-out infinite;
+#loading h1{
+
+font-size:52px;
+
+font-family:'Dancing Script',cursive;
+
+color:#ffd1dc;
+
 }
 
-#her-name {
-    color: #ff69b4;
-    font-weight: bold;
-    text-shadow: 0 0 15px rgba(255, 105, 180, 0.8);
+.loadingBar{
+
+width:420px;
+
+height:10px;
+
+background:#222;
+
+border-radius:100px;
+
+overflow:hidden;
+
 }
 
-.button-group {
-    display: flex;
-    gap: 2rem;
-    margin-top: 2rem;
+.progress{
+
+width:0;
+
+height:100%;
+
+background:linear-gradient(90deg,#ff6aa7,#ffc1d9);
+
+border-radius:100px;
+
+transition:.3s;
+
 }
 
-/* 庆祝区样式 */
-.celebration-text {
-    text-align: center;
-    padding: 2rem;
-    background-color: rgba(10, 10, 42, 0.3);
-    border-radius: 20px;
-    backdrop-filter: blur(5px);
-    animation: scale 1.5s ease-in-out infinite alternate;
+#percent{
+
+font-size:24px;
+
 }
 
-.celebration-text h2 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    color: #ff69b4;
-    text-shadow: 0 0 15px rgba(255, 105, 180, 0.8);
+
+/* =======================================
+   GIFT
+======================================= */
+
+#giftSection{
+
+height:100vh;
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+align-items:center;
+
+text-align:center;
+
+gap:25px;
+
 }
 
-.celebration-text p {
-    font-size: 1.2rem;
-    color: #a8a8ff;
+.title{
+
+font-size:60px;
+
+font-family:'Dancing Script',cursive;
+
+color:#ffd6e7;
+
 }
 
-/* 按钮样式 */
-.btn-primary {
-    padding: 0.8rem 2rem;
-    border: none;
-    border-radius: 30px;
-    background: linear-gradient(135deg, #8a2be2, #9370db);
-    color: white;
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
+#giftSection p{
+
+font-size:22px;
+
+opacity:.9;
+
 }
 
-.btn-primary:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(138, 43, 226, 0.6);
+#giftBox{
+
+width:220px;
+
+height:220px;
+
+position:relative;
+
+cursor:pointer;
+
+transition:.6s;
+
 }
 
-.btn-yes, .btn-no {
-    padding: 1rem 2.5rem;
-    border: none;
-    border-radius: 30px;
-    font-size: 1.2rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
+#giftBox:hover{
+
+transform:scale(1.08);
+
 }
 
-.btn-yes {
-    background: linear-gradient(135deg, #ff69b4, #ff1493);
-    color: white;
-    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+.box{
+
+position:absolute;
+
+bottom:0;
+
+width:220px;
+
+height:150px;
+
+background:#ff4f8b;
+
+border-radius:8px;
+
+box-shadow:0 20px 40px rgba(0,0,0,.35);
+
 }
 
-.btn-yes:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(255, 105, 180, 0.6);
+.lid{
+
+position:absolute;
+
+top:25px;
+
+width:220px;
+
+height:50px;
+
+background:#ff79aa;
+
+border-radius:8px;
+
+transform-origin:left bottom;
+
+transition:.8s;
+
 }
 
-.btn-no {
-    background: linear-gradient(135deg, #6495ed, #4169e1);
-    color: white;
-    box-shadow: 0 4px 15px rgba(100, 149, 237, 0.4);
+.ribbon{
+
+position:absolute;
+
+left:102px;
+
+width:16px;
+
+height:220px;
+
+background:#fff;
+
 }
 
-.btn-no:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(100, 149, 237, 0.6);
+#openGift{
+
+padding:16px 42px;
+
+border:none;
+
+border-radius:40px;
+
+font-size:18px;
+
+cursor:pointer;
+
+background:#ff5d94;
+
+color:white;
+
+transition:.35s;
+
 }
 
-/* 底部按钮样式 */
-.footer {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 10;
+#openGift:hover{
+
+background:#ff7cab;
+
+transform:translateY(-4px);
+
+box-shadow:0 12px 30px rgba(255,105,180,.45);
+
+}
+/* =======================================
+   LETTER
+======================================= */
+
+#letter{
+
+min-height:100vh;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+padding:80px 20px;
+
 }
 
-.btn-restart {
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 20px;
-    background-color: rgba(255, 255, 255, 0.1);
-    color: white;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(5px);
+.paper{
+
+max-width:850px;
+
+width:100%;
+
+background:rgba(255,255,255,.08);
+
+backdrop-filter:blur(18px);
+
+border:1px solid rgba(255,255,255,.15);
+
+border-radius:25px;
+
+padding:50px;
+
+box-shadow:0 20px 60px rgba(0,0,0,.35);
+
 }
 
-.btn-restart:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+.paper h2{
+
+font-family:'Dancing Script',cursive;
+
+font-size:54px;
+
+text-align:center;
+
+color:#ffd6e6;
+
+margin-bottom:35px;
+
 }
 
-/* 动画效果 */
-@keyframes pulse {
-    from {
-        transform: scale(1);
-        opacity: 0.8;
-    }
-    to {
-        transform: scale(1.05);
-        opacity: 1;
-    }
+#typing{
+
+font-size:22px;
+
+line-height:2.1;
+
+white-space:pre-line;
+
 }
 
-@keyframes glow {
-    from {
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(138, 43, 226, 0.6);
-    }
-    to {
-        text-shadow: 0 0 20px rgba(255, 255, 255, 1), 0 0 30px rgba(138, 43, 226, 0.8), 0 0 40px rgba(138, 43, 226, 0.6);
-    }
+
+/* =======================================
+   COUNTER
+======================================= */
+
+#counter{
+
+padding:120px 20px;
+
+text-align:center;
+
 }
 
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-10px);
-    }
+#counter h2{
+
+font-size:52px;
+
+font-family:'Dancing Script',cursive;
+
+margin-bottom:50px;
+
+color:#ffd1e3;
+
 }
 
-@keyframes scale {
-    from {
-        transform: scale(1);
-        opacity: 0.9;
-    }
-    to {
-        transform: scale(1.05);
-        opacity: 1;
-    }
+.time{
+
+display:flex;
+
+justify-content:center;
+
+gap:35px;
+
+flex-wrap:wrap;
+
 }
 
-/* 响应式设计 */
-@media (max-width: 768px) {
-    .intro-title {
-        font-size: 2.5rem;
-    }
-    
-    .name-display {
-        font-size: 3.5rem;
-    }
-    
-    .confession-text {
-        font-size: 1.2rem;
-        max-width: 95%;
-    }
-    
-    .button-group {
-        flex-direction: column;
-        gap: 1rem;
-    }
-    
-    .btn-yes, .btn-no {
-        padding: 0.8rem 2rem;
-        font-size: 1rem;
-    }
+.time div{
+
+width:150px;
+
+height:150px;
+
+background:rgba(255,255,255,.08);
+
+border-radius:25px;
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+backdrop-filter:blur(12px);
+
+transition:.4s;
+
 }
 
-@media (max-width: 480px) {
-    .intro-title {
-        font-size: 2rem;
-    }
-    
-    .intro-subtitle {
-        font-size: 1rem;
-    }
-    
-    .name-display {
-        font-size: 2.5rem;
-    }
-    
-    .confession-text {
-        font-size: 1rem;
-        line-height: 1.6;
-    }
-    
-    .celebration-text h2 {
-        font-size: 2rem;
-    }
-    
-    .celebration-text p {
-        font-size: 1rem;
-    }
+.time div:hover{
+
+transform:translateY(-8px);
+
 }
 
-/* 隐藏元素 */
-.hidden {
-    display: none;
+.time span{
+
+font-size:50px;
+
+font-weight:bold;
+
+color:#ff7aa9;
+
+}
+
+.time small{
+
+margin-top:12px;
+
+font-size:18px;
+
+}
+
+
+/* =======================================
+   HEART GALLERY
+======================================= */
+
+#heartGallery{
+
+padding:120px 20px;
+
+text-align:center;
+
+}
+
+#heartGallery h2{
+
+font-family:'Dancing Script',cursive;
+
+font-size:54px;
+
+margin-bottom:70px;
+
+color:#ffd7e8;
+
+}
+
+#heartContainer{
+
+position:relative;
+
+width:720px;
+
+height:720px;
+
+margin:auto;
+
+}
+
+.photo{
+
+position:absolute;
+
+width:140px;
+
+height:170px;
+
+padding:10px;
+
+background:white;
+
+border-radius:12px;
+
+box-shadow:0 12px 35px rgba(0,0,0,.35);
+
+transition:.5s;
+
+cursor:pointer;
+
+}
+
+.photo:hover{
+
+transform:scale(1.08) rotate(2deg);
+
+z-index:99;
+
+}
+
+.photo img{
+
+width:100%;
+
+height:100%;
+
+object-fit:cover;
+
+border-radius:8px;
+
+}
+
+
+/* =======================================
+   POLAROID
+======================================= */
+
+#polaroidSection{
+
+padding:120px 20px;
+
+}
+
+.sectionTitle{
+
+font-size:52px;
+
+font-family:'Dancing Script',cursive;
+
+text-align:center;
+
+margin-bottom:60px;
+
+color:#ffd6e7;
+
+}
+
+.polaroidContainer{
+
+display:flex;
+
+justify-content:center;
+
+gap:40px;
+
+flex-wrap:wrap;
+
+}
+
+.card{
+
+width:260px;
+
+height:340px;
+
+position:relative;
+
+transform-style:preserve-3d;
+
+transition:1s;
+
+cursor:pointer;
+
+}
+
+.card:hover{
+
+transform:rotateY(180deg);
+
+}
+
+.front,
+
+.back{
+
+position:absolute;
+
+width:100%;
+
+height:100%;
+
+backface-visibility:hidden;
+
+border-radius:18px;
+
+overflow:hidden;
+
+box-shadow:0 15px 35px rgba(0,0,0,.35);
+
+}
+
+.front{
+
+background:white;
+
+padding:15px;
+
+}
+
+.front img{
+
+width:100%;
+
+height:100%;
+
+object-fit:cover;
+
+border-radius:10px;
+
+}
+
+.back{
+
+background:linear-gradient(135deg,#ff79aa,#ffbfd7);
+
+transform:rotateY(180deg);
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+align-items:center;
+
+padding:25px;
+
+text-align:center;
+
+color:white;
+
+}
+
+.back h3{
+
+font-size:30px;
+
+font-family:'Dancing Script',cursive;
+
+margin-bottom:20px;
+
+}
+
+.back p{
+
+line-height:1.8;
+
+font-size:18px;
+
+}
+/* =======================================
+   LOVE LETTER
+======================================= */
+
+#loveLetter{
+
+padding:120px 20px;
+
+display:flex;
+
+justify-content:center;
+
+}
+
+.envelope{
+
+max-width:900px;
+
+width:100%;
+
+background:rgba(255,255,255,.08);
+
+backdrop-filter:blur(20px);
+
+padding:50px;
+
+border-radius:30px;
+
+box-shadow:0 20px 60px rgba(0,0,0,.35);
+
+}
+
+.letterInside h2{
+
+font-family:'Dancing Script',cursive;
+
+font-size:56px;
+
+text-align:center;
+
+color:#ffd7e8;
+
+margin-bottom:35px;
+
+}
+
+.letterInside p{
+
+font-size:21px;
+
+line-height:2;
+
+margin-bottom:20px;
+
+}
+
+
+/* =======================================
+   FINAL
+======================================= */
+
+#fireworksSection{
+
+padding:120px 20px;
+
+text-align:center;
+
+}
+
+#fireworksSection h2{
+
+font-family:'Dancing Script',cursive;
+
+font-size:60px;
+
+margin-bottom:25px;
+
+color:#ffd7e8;
+
+}
+
+#showFinal{
+
+margin-top:35px;
+
+padding:18px 45px;
+
+font-size:20px;
+
+border:none;
+
+border-radius:40px;
+
+cursor:pointer;
+
+background:#ff5f98;
+
+color:white;
+
+transition:.35s;
+
+}
+
+#showFinal:hover{
+
+transform:scale(1.08);
+
+box-shadow:0 15px 35px rgba(255,105,180,.45);
+
+}
+
+#finalMessage{
+
+padding:140px 20px;
+
+display:flex;
+
+justify-content:center;
+
+}
+
+.glass{
+
+max-width:900px;
+
+width:100%;
+
+padding:60px;
+
+background:rgba(255,255,255,.08);
+
+backdrop-filter:blur(20px);
+
+border-radius:35px;
+
+text-align:center;
+
+}
+
+.glass h1{
+
+font-family:'Dancing Script',cursive;
+
+font-size:70px;
+
+margin-bottom:30px;
+
+color:#ffd5e6;
+
+}
+
+.glass p{
+
+font-size:22px;
+
+line-height:2;
+
+margin-bottom:18px;
+
+}
+
+.glass h2{
+
+margin-top:40px;
+
+font-size:34px;
+
+color:#ff9fc2;
+
+}
+
+
+/* =======================================
+   MODAL
+======================================= */
+
+#imageModal{
+
+position:fixed;
+
+left:0;
+
+top:0;
+
+width:100%;
+
+height:100%;
+
+background:rgba(0,0,0,.85);
+
+display:none;
+
+justify-content:center;
+
+align-items:center;
+
+z-index:999;
+
+}
+
+#modalImage{
+
+max-width:90%;
+
+max-height:90%;
+
+border-radius:18px;
+
+box-shadow:0 20px 60px rgba(0,0,0,.45);
+
+}
+
+#closeModal{
+
+position:absolute;
+
+top:30px;
+
+right:40px;
+
+font-size:45px;
+
+cursor:pointer;
+
+color:white;
+
+}
+
+
+/* =======================================
+   FLOAT BUTTONS
+======================================= */
+
+#musicBtn,
+#backTop{
+
+position:fixed;
+
+right:25px;
+
+border:none;
+
+cursor:pointer;
+
+border-radius:50px;
+
+background:#ff5f98;
+
+color:white;
+
+box-shadow:0 12px 25px rgba(0,0,0,.3);
+
+transition:.3s;
+
+z-index:999;
+
+}
+
+#musicBtn{
+
+bottom:95px;
+
+padding:15px 22px;
+
+}
+
+#backTop{
+
+bottom:25px;
+
+width:55px;
+
+height:55px;
+
+font-size:22px;
+
+}
+
+#musicBtn:hover,
+#backTop:hover{
+
+transform:translateY(-4px);
+
+}
+
+
+/* =======================================
+   FOOTER
+======================================= */
+
+footer{
+
+padding:60px 20px;
+
+text-align:center;
+
+background:rgba(255,255,255,.05);
+
+margin-top:80px;
+
+}
+
+footer h2{
+
+font-family:'Dancing Script',cursive;
+
+font-size:42px;
+
+margin-bottom:12px;
+
+color:#ffd7e8;
+
+}
+
+footer p{
+
+opacity:.8;
+
+}
+
+
+/* =======================================
+   RESPONSIVE
+======================================= */
+
+@media(max-width:768px){
+
+.title{
+
+font-size:42px;
+
+}
+
+#giftBox{
+
+transform:scale(.8);
+
+}
+
+.paper{
+
+padding:30px;
+
+}
+
+.paper h2{
+
+font-size:40px;
+
+}
+
+#typing{
+
+font-size:18px;
+
+}
+
+#counter h2,
+
+#heartGallery h2,
+
+.sectionTitle,
+
+.letterInside h2,
+
+#fireworksSection h2{
+
+font-size:40px;
+
+}
+
+.time{
+
+gap:15px;
+
+}
+
+.time div{
+
+width:120px;
+
+height:120px;
+
+}
+
+.time span{
+
+font-size:36px;
+
+}
+
+#heartContainer{
+
+width:100%;
+
+height:560px;
+
+transform:scale(.72);
+
+}
+
+.polaroidContainer{
+
+flex-direction:column;
+
+align-items:center;
+
+}
+
+.card{
+
+width:280px;
+
+height:360px;
+
+}
+
+.glass{
+
+padding:35px;
+
+}
+
+.glass h1{
+
+font-size:48px;
+
+}
+
+.glass p{
+
+font-size:18px;
+
+}
+
+#musicBtn{
+
+right:15px;
+
+bottom:90px;
+
+font-size:14px;
+
+padding:12px 18px;
+
+}
+
+#backTop{
+
+right:15px;
+
+}
+
 }
