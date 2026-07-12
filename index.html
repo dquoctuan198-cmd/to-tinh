@@ -1,79 +1,565 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nguyện ước dưới bầu trời sao</title>
+
+    <title>❤️ Gửi Bé Huyền ❤️</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
 </head>
+
 <body>
-    <!-- Nền bầu trời đầy sao -->
-    <canvas id="starfield"></canvas>
-    
-    <!-- Hiệu ứng sao băng -->
-    <canvas id="meteors"></canvas>
-    
-    <!-- Hiệu ứng pháo hoa
- -->
-    <canvas id="fireworks"></canvas>
-    
-    <!-- Khu vực nội dung chính
- -->
-    <div class="container">
-        <!-- Vùng khởi động ban đầu -->
-        <div id="intro-section" class="section active">
-            <h1 class="intro-title">Hãy ước một điều ước dưới bầu trời sao</h1>
-            <p class="intro-subtitle">Nguyện ước dưới bầu trời sao，Dưới bầu trời sao bao la, hãy gửi gắm đến người ấy những lời nguyện ước chân thành nhất.</p>
-            <div class="input-container">
-                <input type="text" id="name-input" placeholder="Nhập tên của em">
-                <button id="start-btn" class="btn-primary">Bắt đầu thực hiện một điều ước</button>
-            </div>
+
+    <!-- Background -->
+
+    <canvas id="stars"></canvas>
+
+    <div class="petals"></div>
+
+    <div class="hearts"></div>
+
+    <!-- MUSIC -->
+
+    <audio id="bgMusic" loop>
+        <source src="music/Tình yêu đến ngọt ngào.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Loading -->
+
+    <section id="loading">
+
+        <h1>Loading Memories...</h1>
+
+        <div class="loadingBar">
+
+            <div class="progress"></div>
+
         </div>
-        
-        <!-- Khu vực hiển thị tên -->
-        <div id="name-section" class="section hidden">
-            <div id="name-display" class="name-display"></div>
+
+        <p id="percent">0%</p>
+
+    </section>
+
+    <!-- Gift -->
+
+    <section id="giftSection">
+
+        <h1 class="title">
+
+            Có một món quà nhỏ...
+
+        </h1>
+
+        <p>
+
+            Anh đã chuẩn bị rất lâu...
+
+        </p>
+
+        <div id="giftBox">
+
+            <div class="lid"></div>
+
+            <div class="box"></div>
+
+            <div class="ribbon"></div>
+
         </div>
-        
-        <!-- Khu vực chữ tỏ tình -->
-        <div id="confession-section" class="section hidden">
-            <div id="confession-text" class="confession-text">
-                Có một câu nói anh đã luyện tập trong lòng rất nhiều lần, hôm nay muốn nghiêm túc nói cho em nghe。<br><br>
-                Trước khi gặp được em, những ngày tháng của anh giống như một căn phòng không bật đèn, yên tĩnh nhưng lại thiếu đi chút hơi ấm. Cho đến khi em xuất hiện, giống như một tia sáng dịu dàng chiếu rọi vào, thắp sáng cả bầu trời sao của anh. Anh bắt đầu mong ngóng những lần gặp gỡ mỗi ngày, lén lút ghi nhớ những điều nhỏ bé mà em thích, và vui lây với niềm vui của em.<br><br>
-                Anh thích em, không phải là cảm xúc bồng bột nhất thời, mà là sự chân tâm sau khi đã suy nghĩ rất kỹ. [điền tên người ấy vào đây], em có bằng lòng làm bạn gái anh, để bầu trời sao sau này của anh mãi mãi có bóng hình em không?<span id="her-name">[Diệu Huyền]</span>，Em có đồng ý làm bạn gái anh không?，Liệu em sẽ mãi ở trong bầu trời đầy sao tương lai của anh？
+
+        <button id="openGift">
+
+            Mở Quà 🎁
+
+        </button>
+
+    </section>
+
+    <!-- Letter -->
+
+    <section id="letter">
+
+        <div class="paper">
+
+            <h2>
+
+                Gửi bé Huyền yêu dấu của anh ❤️
+
+            </h2>
+
+            <div id="typing">
+
             </div>
-            <div class="button-group">
-                <button id="yes-btn" class="btn-yes">Em bằng lòng</button>
-                <button id="no-btn" class="btn-no">Em không bằng lòng</button>
-            </div>
+
         </div>
-        
-        <!-- Khu vực tổ chức bắn pháo hoa-->
-        <div id="celebration-section" class="section hidden">
-            <div class="celebration-text">
-                <h2>Yeahh！</h2>
-                <p>Hãy cùng anh thắp sáng bầu trời sao này nhé!</p>
+
+    </section>
+
+    <!-- Counter -->
+
+    <section id="counter">
+
+        <h2>
+
+            Chúng mình đã bên nhau
+
+        </h2>
+
+        <div class="time">
+
+            <div>
+
+                <span id="days">0</span>
+
+                <small>Ngày</small>
+
             </div>
+
+            <div>
+
+                <span id="hours">0</span>
+
+                <small>Giờ</small>
+
+            </div>
+
+            <div>
+
+                <span id="minutes">0</span>
+
+                <small>Phút</small>
+
+            </div>
+
+            <div>
+
+                <span id="seconds">0</span>
+
+                <small>Giây</small>
+
+            </div>
+
         </div>
+
+    </section>
+
+    <!-- Heart Gallery -->
+
+    <section id="heartGallery">
+
+        <h2>
+
+            Những khoảnh khắc anh luôn muốn lưu giữ
+
+        </h2>
+
+        <div id="heartContainer">
+
+            <div class="photo p1">
+                <img src="images/01.jpg">
+            </div>
+
+            <div class="photo p2">
+                <img src="images/02.jpg">
+            </div>
+
+            <div class="photo p3">
+                <img src="images/03.jpg">
+            </div>
+
+            <div class="photo p4">
+                <img src="images/04.jpg">
+            </div>
+
+            <div class="photo p5">
+                <img src="images/05.jpg">
+            </div>
+
+            <div class="photo p6">
+                <img src="images/06.jpg">
+            </div>
+
+            <div class="photo p7">
+                <img src="images/07.jpg">
+            </div>
+
+            <div class="photo p8">
+                <img src="images/08.jpg">
+            </div>
+
+            <div class="photo p9">
+                <img src="images/09.jpg">
+            </div>
+
+            <div class="photo p10">
+                <img src="images/10.jpg">
+            </div>
+
+            <div class="photo p11">
+                <img src="images/11.jpg">
+            </div>
+
+            <div class="photo p12">
+                <img src="images/12.jpg">
+            </div>
+
+        </div>
+
+    </section>
+        <!-- ========================= -->
+    <!-- POLAROID ALBUM -->
+    <!-- ========================= -->
+
+    <section id="polaroidSection">
+
+        <h2 class="sectionTitle">
+
+            Mỗi tấm ảnh đều là một lần anh mỉm cười ❤️
+
+        </h2>
+
+        <div class="polaroidContainer">
+
+            <div class="card">
+
+                <div class="front">
+                    <img src="images/01.jpg" alt="">
+                </div>
+
+                <div class="back">
+
+                    <h3>Bé Huyền</h3>
+
+                    <p>
+                        Mỗi lần nhìn em cười...
+                        thế giới của anh lại dịu dàng hơn một chút.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <div class="front">
+                    <img src="images/04.jpg">
+                </div>
+
+                <div class="back">
+
+                    <h3>Em biết không?</h3>
+
+                    <p>
+
+                        Có những ngày rất bình thường...
+                        nhưng chỉ cần nghĩ đến em là đủ vui rồi.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <div class="front">
+                    <img src="images/07.jpg">
+                </div>
+
+                <div class="back">
+
+                    <h3>Điều anh thích nhất</h3>
+
+                    <p>
+
+                        Là được ngắm em thật lâu
+                        mà chẳng cần một lý do nào cả.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <div class="front">
+                    <img src="images/10.jpg">
+                </div>
+
+                <div class="back">
+
+                    <h3>Hy vọng</h3>
+
+                    <p>
+
+                        Sau này...
+                        mọi bức ảnh đẹp nhất
+                        sẽ đều có cả anh và em.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+
+
+    <!-- ========================= -->
+    <!-- LOVE LETTER -->
+    <!-- ========================= -->
+
+    <section id="loveLetter">
+
+        <div class="envelope">
+
+            <div class="letterInside">
+
+                <h2>
+
+                    💌 Gửi Bé Huyền
+
+                </h2>
+
+                <p>
+
+                    Anh đã nghĩ rất lâu...
+
+                </p>
+
+                <p>
+
+                    Nếu một ngày nào đó em vô tình mở được trang web này...
+
+                    thì anh chỉ muốn em biết rằng...
+
+                    em là một trong những điều đẹp nhất đã từng xuất hiện trong cuộc đời anh.
+
+                </p>
+
+                <p>
+
+                    Anh không biết tương lai sẽ như thế nào...
+
+                    nhưng anh biết hiện tại...
+
+                    anh luôn muốn dành những điều dịu dàng nhất cho em.
+
+                </p>
+
+                <p>
+
+                    Cảm ơn em...
+
+                    vì đã đến...
+
+                    và khiến cuộc sống của anh trở nên nhiều màu sắc hơn.
+
+                </p>
+
+                <p>
+
+                    Anh hy vọng...
+
+                    sau này...
+
+                    chúng mình sẽ còn rất nhiều tấm ảnh đẹp...
+
+                    rất nhiều chuyến đi...
+
+                    rất nhiều câu chuyện...
+
+                    và rất nhiều ngày được ở cạnh nhau.
+
+                </p>
+
+                <p>
+
+                    Anh thương em rất nhiều ❤️
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+
+
+
+    <!-- ========================= -->
+    <!-- FIREWORK -->
+    <!-- ========================= -->
+
+    <section id="fireworksSection">
+
+        <h2>
+
+            Điều cuối cùng...
+
+        </h2>
+
+        <p>
+
+            Anh muốn nói...
+
+        </p>
+
+        <button id="showFinal">
+
+            💖 Anh còn điều muốn nói...
+
+        </button>
+
+    </section>
+
+
+
+
+
+
+    <!-- ========================= -->
+    <!-- FINAL -->
+    <!-- ========================= -->
+
+    <section id="finalMessage">
+
+        <div class="glass">
+
+            <h1>
+
+                Anh Yêu Em ❤️
+
+            </h1>
+
+            <p>
+
+                Cảm ơn em đã xuất hiện.
+
+            </p>
+
+            <p>
+
+                Cảm ơn em vì đã là chính em.
+
+            </p>
+
+            <p>
+
+                Hy vọng sau này...
+
+                mọi mùa hè...
+
+                mọi mùa đông...
+
+                mọi ngày sinh nhật...
+
+                mọi chuyến đi...
+
+                đều sẽ có anh ở cạnh em.
+
+            </p>
+
+            <h2>
+
+                19 / 06 / 2026 💕
+
+            </h2>
+
+        </div>
+
+    </section>
+        <!-- ========================= -->
+    <!-- IMAGE MODAL -->
+    <!-- ========================= -->
+
+    <div id="imageModal">
+
+        <span id="closeModal">&times;</span>
+
+        <img id="modalImage" src="" alt="">
+
     </div>
-    
-    <!-- Ruy băng dưới cùng -->
-    <div class="footer">
-        <button id="restart-btn" class="btn-restart">Bắt đầu lại</button>
-    </div>
-    
-    <!-- Yếu tố âm thanh -->
-    <audio id="bg-music" loop preload="auto">
-        <source src="https://www.aigei.com/sound/preview/1724228.html" type="audio/mpeg">
-    </audio>
-    <audio id="star-sound" preload="auto">
-        <source src="https://www.aigei.com/sound/preview/1724228.html" type="audio/mpeg">
-    </audio>
-    <audio id="firework-sound" preload="auto">
-        <source src="https://www.aigei.com/sound/preview/1724228.html" type="audio/mpeg">
-    </audio>
-    
+
+
+
+    <!-- ========================= -->
+    <!-- MUSIC BUTTON -->
+    <!-- ========================= -->
+
+    <button id="musicBtn">
+
+        🎵 Bật / Tắt Nhạc
+
+    </button>
+
+
+
+    <!-- ========================= -->
+    <!-- BACK TO TOP -->
+    <!-- ========================= -->
+
+    <button id="backTop">
+
+        ❤️
+
+    </button>
+
+
+
+    <!-- ========================= -->
+    <!-- FIREWORK CANVAS -->
+    <!-- ========================= -->
+
+    <canvas id="fireCanvas"></canvas>
+
+
+
+    <!-- ========================= -->
+    <!-- FOOTER -->
+    <!-- ========================= -->
+
+    <footer>
+
+        <h2>
+
+            Made with ❤️ only for Bé Huyền
+
+        </h2>
+
+        <p>
+
+            © 2026 — From someone who always smiles when thinking of you.
+
+        </p>
+
+    </footer>
+
+
+
+    <!-- ========================= -->
+    <!-- JAVASCRIPT -->
+    <!-- ========================= -->
+
     <script src="script.js"></script>
+
 </body>
-</html> 
+
+</html>
